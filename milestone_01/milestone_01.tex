@@ -1,0 +1,146 @@
+%----------------------------------------------------------------------------
+\documentclass{article}
+%----------------------------------------------------------------------------
+\usepackage[a4paper, top=20mm, bottom=20mm, left=20mm, right=20mm]{geometry}
+%----------------------------------------------------------------------------
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+\usepackage[ngerman]{babel}
+\usepackage{parskip}
+%----------------------------------------------------------------------------
+\graphicspath{ {./images/} }
+%----------------------------------------------------------------------------
+% fancyhdr setup
+%----------------------------------------------------------------------------
+\pagestyle{fancy}	% activate fancy style
+\fancyhf{}			% clear fancy settings
+% Header
+\fancyhead[L]{Datenbanksysteme: Übungsprojekt}
+\fancyhead[C]{Konzeptionelles Design}
+\fancyhead[R]{v1.0}
+\setlength{\headheight}{13pt}
+% Footer
+\fancyfoot[C]{Seite \thepage}
+\fancyfoot[R]{\today}
+% lines
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%----------------------------------------------------------------------------
+% first page setup
+%----------------------------------------------------------------------------
+\title{Meilenstein 1: Konzeptionelles Design}
+\author{Boiko Bohdana, Alexander Grath}
+\date{} % empty date
+%----------------------------------------------------------------------------
+% reference definitions (examples)
+%----------------------------------------------------------------------------
+\begin{filecontents}{references.bib}
+@article{doe2023,
+  author  = {Doe, John and Smith, Jane},
+  title   = {An Analysis of Citation Styles},
+  journal = {IEEE Transactions on Automatic Formatting},
+  volume  = {10},
+  number  = {2},
+  pages   = {100--105},
+  year    = {2023}
+}
+
+@book{knuth1984,
+  author    = {Knuth, Donald E.},
+  title     = {The TeXbook},
+  publisher = {Addison-Wesley},
+  year      = {1984}
+}
+\end{filecontents}
+%----------------------------------------------------------------------------
+\begin{document}
+%
+\maketitle
+%
+\thispagestyle{empty} % clear page number
+%
+\begin{center}
+\section*{Realitätsausschnitt und konzeptueller Entwurf}
+\end{center}
+%
+% show university logo
+\begin{figure}
+	\centering
+	\includegraphics[scale=.6]{univie}
+\end{figure}
+%
+\newpage
+%
+%\tableofcontents%(enable for table of contents)
+%
+\setcounter{page}{1} % restart page count at 1
+%
+%\newpage %(enable for table of contents)
+%
+% ### EXAMPLE OF USING LIPSUM AND CITATIONS ###
+%\section{Kurze Beschreibung des Themengebietes und Relevanz der Studie}
+%
+%\lipsum[1-9]  %~1000W
+%\lipsum[1-13] %~1500W
+%
+%This is a citation for the first paper \cite{doe2023}. 
+%Here is a citation for a book \cite{knuth1984}.
+% #############################################
+%
+\section{Definition des Realitätsausschnittes}
+%
+Aus der Angabe wurde der Vorschlag Fahrplansystem gewählt. Als reale Vorlage dient Wien Praterstern.
+
+\medskip
+Wir haben also ein System mit \textbf{Fahrzeugen}, \textbf{Personal}, ein \textbf{Streckennetz}, einen \textbf{Vertrieb} und einen \textbf{Betrieb}.
+
+\medskip
+\textbf{Fahrzeuge} haben eine \underline{\textit{Identifizierungsnummer}} ein \textit{Baujahr} und eine \textit{Kapazität}.\\ Es gib folgende Fahrzeuge:
+\begin{itemize}
+	\item \textbf{Busse}: haben ein \textit{Kennzeichen} und können \textit{Niederflur}busse sein
+	\item \textbf{Züge}: haben eine \textit{Baureihe} und eine \textit{Wagonanzahl}
+	\item \textbf{Straßenbahnen}: haben eine \textbf{Spurweite} (in Wien Normalspur) und \textbf{Stromsystem} (in Wien Gleichstrom mit Oberleitungs-Stromabnehmer)
+\end{itemize}
+Fahrzeuge müssen auch aufwendig gewartet werden, jede \textbf{Wartung} sorgt für mögliche Verzögerungen und sollte daher genau dokumentiert werden. Es werden eine \underline{\textit{laufende Nummer}}, das \textit{Datum}, die \textit{Kosten} und die \textit{Art der Wartung} festgehalten
+
+\medskip
+Das \textbf{Personal} mit einer \underline{\textit{Personalnummer}}, \textit{Namen}, \textit{Gehalt} und \textit{Einstellungsdatum} teil sich in unserem System in:
+\begin{itemize}
+	\item \textbf{Fahrer:innen}: welche eine \textit{Führerscheinklasse} haben
+	\item \textbf{Kontrolleuren}: welche einen genauen \textit{Zuständigkeitsbereich} haben
+\end{itemize}
+Für Ausbildungszwecke und auch für den normalen Betrieb (Schichtwechsel) kann es vorkommen das ein Fahrer:in mehrere andere Fahrer:innen transportiert bzw. \textit{betreut}.
+
+\medskip
+Im Streckennetz gibt es:
+\begin{itemize}
+	\item \textbf{Lininen}: mit einer \underline{\textit{Linien Nummer}}, einer \textit{Taktung} (in Minuten), dem \textit{Beginn} und dem \textit{Ende} der \textit{Betriebszeit}
+	\item \textbf{Haltestellen}: mit einer \underline{\textit{Identifikation}}, einem \textit{Namen} und \textit{Barrierefreiheit}.
+\end{itemize}
+Damit lässt sich ein Streckenplan erstellen der sowohl für das Personal als auch die Kunden zu verwenden ist.
+
+\medskip
+Im Vertrieb/Betrieb muss man 
+\begin{itemize}
+	\item \textbf{Kunden}: mit \underline{\textit{Kunden ID}}, \textit{Namen}, \textit{e-mail} und \textit{Adresse} \\ und
+	\item \textbf{Tickets}: mit \underline{\textit{Ticket ID}} , \textit{Kaufdatum}, \textit{Preis} und \textit{Gültigkeitszeitraum}
+\end{itemize}
+abhandeln. \\
+Die Bezahlungen werden mit den, eindeutig indentifierzierbaren, Kunden über externe Zahlungsunternehmen durchgeführt und werden nicht von diesem System erfasst.
+%
+\newpage
+%
+\section{Konzeptueller Entwurf}
+%
+%\newpage %(enable for citations)
+%
+%\bibliographystyle{ieeetr} %(enable for citations)
+%
+%\bibliography{references} %(enable for citations)
+%
+\end{document}
