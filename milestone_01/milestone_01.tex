@@ -29,7 +29,6 @@
 % lines
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
-
 %----------------------------------------------------------------------------
 % first page setup
 %----------------------------------------------------------------------------
@@ -92,7 +91,9 @@
 %Here is a citation for a book \cite{knuth1984}.
 % #############################################
 %
-\section{Definition des Realitätsausschnittes}
+\begin{paracol}{2}[\section{Definition des Realitätsausschnittes}]
+%
+\raggedright % fix styling for paracol
 %
 Aus der Angabe wurde der Vorschlag Fahrplansystem gewählt. Als reale Vorlage dient Wien Praterstern.
 
@@ -104,7 +105,7 @@ Wir haben also ein System mit \textbf{Fahrzeugen}, \textbf{Personal}, ein \textb
 \begin{itemize}
 	\item \textbf{Busse}: haben ein \textit{Kennzeichen} und können \textit{Niederflur}busse sein
 	\item \textbf{Züge}: haben eine \textit{Baureihe} und eine \textit{Wagonanzahl}
-	\item \textbf{Straßenbahnen}: haben eine \textbf{Spurweite} (in Wien Normalspur) und \textbf{Stromsystem} (in Wien Gleichstrom mit Oberleitungs-Stromabnehmer)
+	\item \textbf{Straßenbahnen}: haben eine \textit{Spurweite} (in Wien Normalspur) und \textit{Stromsystem} (in Wien Gleichstrom mit Oberleitungs-Stromabnehmer)
 \end{itemize}
 Fahrzeuge müssen auch aufwendig gewartet werden, jede \textbf{Wartung} sorgt für mögliche Verzögerungen und sollte daher genau dokumentiert werden. Es werden eine \underline{\textit{laufende Nummer}}, das \textit{Datum}, die \textit{Kosten} und die \textit{Art der Wartung} festgehalten
 
@@ -112,7 +113,7 @@ Fahrzeuge müssen auch aufwendig gewartet werden, jede \textbf{Wartung} sorgt f�
 Das \textbf{Personal} mit einer \underline{\textit{Personalnummer}}, \textit{Namen}, \textit{Gehalt} und \textit{Einstellungsdatum} teil sich in unserem System in:
 \begin{itemize}
 	\item \textbf{Fahrer:innen}: welche eine \textit{Führerscheinklasse} haben
-	\item \textbf{Kontrolleuren}: welche einen genauen \textit{Zuständigkeitsbereich} haben
+	\item \textbf{Kontrolleuren}: welche einen genauen \\ \textit{Zuständigkeitsbereich} haben
 \end{itemize}
 Für Ausbildungszwecke und auch für den normalen Betrieb (Schichtwechsel) kann es vorkommen das ein Fahrer:in mehrere andere Fahrer:innen transportiert bzw. \textit{betreut}.
 
@@ -130,8 +131,26 @@ Im Vertrieb/Betrieb muss man
 	\item \textbf{Kunden}: mit \underline{\textit{Kunden ID}}, \textit{Namen}, \textit{e-mail} und \textit{Adresse} \\ und
 	\item \textbf{Tickets}: mit \underline{\textit{Ticket ID}} , \textit{Kaufdatum}, \textit{Preis} und \textit{Gültigkeitszeitraum}
 \end{itemize}
-abhandeln. \\
+abhandeln.
+\switchcolumn
 Die Bezahlungen werden mit den, eindeutig indentifierzierbaren, Kunden über externe Zahlungsunternehmen durchgeführt und werden nicht von diesem System erfasst.
+%
+\subsection*{Beziehungen der Elemente}
+%
+\begin{itemize}
+	\item Bus, Zug und die Straßenbahn sind alles Fahrzeuge.
+	\item Alle Fahrzeuge können von Wartungen betroffen sein.
+	\item Fahrer:innen und Kontrolleure sind Teil des Personals.
+	\item Fahrer:innen können als Mentor neue Fahrer:innen trainieren.
+	\item Im Einsatz im Fahrplansystem sind sowohl Fahrer:innen mit dem Zugeordneten Fahrzeug auf der richtigen Linie.
+	\item Diese Linien bedienen Haltestellen.
+	\item Um fahren zu können, kaufen Kunden ein Ticket. 
+	\item Dieses Ticket gilt für gewisse Linien und 
+	\item werden von einem Kontrolleur geprüft.
+\end{itemize}
+
+%
+\end{paracol}
 %
 \newpage
 %
