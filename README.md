@@ -1,5 +1,5 @@
-# dbs_gruppe23
-Student project for DBS Group 23
+# dbs_gruppe30
+Student project for DBS Group 30 (yes I accidentally called the repo group 23 instead of 30)
 
 ## Meilenstein 1: Konzeptionelles Design
 
