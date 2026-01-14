@@ -1,0 +1,537 @@
+%----------------------------------------------------------------------------
+\documentclass{article}
+%----------------------------------------------------------------------------
+\usepackage[a4paper, top=20mm, bottom=20mm, left=20mm, right=20mm]{geometry}
+%----------------------------------------------------------------------------
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+\usepackage[ngerman]{babel}
+\usepackage{parskip}
+\usepackage{pdflscape}
+%----------------------------------------------------------------------------
+\graphicspath{ {./images/} }
+%----------------------------------------------------------------------------
+% fancyhdr setup
+%----------------------------------------------------------------------------
+\pagestyle{fancy}	% activate fancy style
+\fancyhf{}			% clear fancy settings
+% Header
+\fancyhead[L]{Datenbanksysteme: Übungsprojekt}
+\fancyhead[C]{Logischer und Physischer Entwurf}
+\fancyhead[R]{v1.0}
+\setlength{\headheight}{13pt}
+% Footer
+\fancyfoot[C]{Seite \thepage}
+\fancyfoot[R]{\today}
+% lines
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%----------------------------------------------------------------------------
+% first page setup
+%----------------------------------------------------------------------------
+\title{Meilenstein 2: Logischer und Physischer Entwurf}
+\author{Gruppe 30\\Boiko Bohdana, Alexander Grath}
+\date{} % empty date
+%----------------------------------------------------------------------------
+% reference definitions (examples)
+%----------------------------------------------------------------------------
+\begin{filecontents}{references.bib}
+@article{doe2023,
+  author  = {Doe, John and Smith, Jane},
+  title   = {An Analysis of Citation Styles},
+  journal = {IEEE Transactions on Automatic Formatting},
+  volume  = {10},
+  number  = {2},
+  pages   = {100--105},
+  year    = {2023}
+}
+
+@book{knuth1984,
+  author    = {Knuth, Donald E.},
+  title     = {The TeXbook},
+  publisher = {Addison-Wesley},
+  year      = {1984}
+}
+\end{filecontents}
+%----------------------------------------------------------------------------
+\begin{document}
+%
+\maketitle
+%
+\thispagestyle{empty} % clear page number
+%
+\begin{center}
+\section*{Logischer und Physischer Entwurf}
+\end{center}
+%
+% show university logo
+\begin{figure}
+	\centering
+	\includegraphics[scale=.6]{univie}
+\end{figure}
+%
+\newpage
+%
+%\tableofcontents%(enable for table of contents)
+%
+\setcounter{page}{1} % restart page count at 1
+%
+%\newpage %(enable for table of contents)
+%
+% ### EXAMPLE OF USING LIPSUM AND CITATIONS ###
+%\section{Kurze Beschreibung des Themengebietes und Relevanz der Studie}
+%
+%\lipsum[1-9]  %~1000W
+%\lipsum[1-13] %~1500W
+%
+%This is a citation for the first paper \cite{doe2023}. 
+%Here is a citation for a book \cite{knuth1984}.
+% #############################################
+%
+\section{ER-Diagramm}
+%
+\includegraphics[scale=0.4]{erd}
+%
+Kopie des ER-Diagramms aus Meilenstein 1.
+%
+\newpage
+%
+\begin{paracol}{2}[\section{Logischer Entwurf}]
+%
+\raggedright % fix styling for paracol
+%
+Fahrzeug(\underline{FahrzeugID}, Baujahr, Kapazität)\\
+\textbf{Primarey Key:} FahrzeugID
+
+\medskip
+Bus(\underline{\textit{FahrzeugID}}, Kennzeichen, Niederflur)\\
+\textbf{Primary Key:} FahrzeugID\\
+\textbf{Foreign Key:} FahrzeugID $\diamond $ Fahrzeug.FahrzeugID
+
+\medskip
+Zug(\underline{\textit{FahrzeugID}}, Baureihe, Wagonzahl)\\
+\textbf{Primary Key:} FahrzeugID\\
+\textbf{Foreign Key:} FahrzeugID $\diamond $ Fahrzeug.FahrzeugID
+
+\medskip
+Straßenbahn(\underline{\textit{FahrzeugID}}, Spurweite, Stromsystem)\\
+\textbf{Primary Key:} FahrzeugID\\
+\textbf{Foreign Key:} FahrzeugID $\diamond $ Fahrzeug.FahrzeugID
+
+\medskip
+Wartung(\underline{WartungsID}, Datum, Kosten, Art, \textit{FahrzeugID})\\
+\textbf{Primary Key:} WartungsID\\
+\textbf{Foreign Key:} FahrzeugID $\diamond $ Fahrzeug.FahrzeugID
+
+\medskip
+Personal(\underline{PersonalNr}, Name, Gehalt, Einstellungsdatum)\\
+\textbf{Primary Key:} PersonalNr
+
+\medskip
+Fahrer(\underline{\textit{PersonalNr}}, Führerscheinklasse, \textit{MentorNr})\\
+\textbf{Primary Key:} PersonalNr\\
+\textbf{Foreign Key:} PersonalNr $\diamond $ Personal.PersonalNr\\
+\textbf{Foreign Key:} MentorNr $\diamond $ Farhrer.PersonalNr
+%
+\switchcolumn
+%
+Kontrolleur(\underline{\textit{PersonalNr}}, Zuständigkeitsbereich)\\
+\textbf{Primary Key:} PersonalNr\\
+\textbf{Foreign Key:} PersonalNr $\diamond $ Personal.PersonalNr
+
+\medskip
+Halstestelle(\underline{HalstestellenID}, Name, Barrierefrei)\\
+\textbf{Primary Key:} HalstestellenID
+
+\medskip
+Linie(\underline{LinienNr}, Taktung, Betriebsbeginn, Betriebsende)\\
+\textbf{Primary Key:} LinienNr
+
+\medskip
+Linie\_Haltestelle(\underline{\textit{LinienNr}}, \underline{\textit{HaltestellenID}}, Reihenfolge)\\
+\textbf{Primary Key:} (LinienNr, HaltestellenID)\\
+\textbf{Foreign Key:} LinienNr $\diamond $ Linie.LinienNr\\
+\textbf{Foreign Key:} HaltestellenID $\diamond $ Haltestelle.HaltestellenID
+
+\medskip
+Kunde(\underline{KundenID}, Name, Email, Adresse)\\
+\textbf{Primary Key:} KundenID
+
+\medskip
+Ticket(\underline{TicketID}, Kaufdatum, Preis, GültigVon, GültigBis, \textit{KundenID})\\
+\textbf{Primary Key:} TicketID\\
+\textbf{Foreign Key:} KundenID $\diamond $ Kunde.KundenID
+
+\medskip
+Ticket\_Linie(\underline{\textit{TicketID}}, \underline{\textit{LinienNr}})\\
+\textbf{Primary Key:} (TicketID, LinienNr)\\
+\textbf{Foreign Key:} TicketID $\diamond $ Ticket.TicketID\\
+\textbf{Foreign Key:} LinienNr $\diamond $ Linie.LinienNr
+%
+\end{paracol}
+%
+\section{Physischer Entwurf}
+Wie in den Übungen besprochen wurden alle keys und constraints benannt, im Falle eines Fehlers sollte damit ein lesbarer Errorcode erstellt werden.
+
+\medskip
+Aus der Angabe zu verwendenden Bedingungen:
+\begin{itemize}
+    \item \textbf{Primärschlüssel}\\alle Tables haben einen Primärschlüssel
+    \item \textbf{Sekundärschlüssel}\\Beispiel aus 'Haltestelle':\begin{verbatim}
+    CONSTRAINT UQ_Haltestelle_Name UNIQUE (Name)
+    \end{verbatim}
+    \item \textbf{Fremdschlüssel}\\Beispiel aus 'Wartung':\begin{verbatim}
+    CONSTRAINT FK_Wartung_Fahrzeug FOREIGN KEY (FahrzeugID) 
+        REFERENCES Fahrzeug(FahrzeugID)
+    \end{verbatim}
+    'Wartung' wird mit 'Fahrzeug' verbunden.
+    \item \textbf{Verbieten von Nullwerten}\\Beispiel aus 'Fahrzeug':\begin{verbatim}
+    Baujahr SMALLINT NOT NULL
+    \end{verbatim}
+    \item \textbf{Domänenconstraints}\\Beispiel aus 'Fahrzeug':\begin{verbatim}
+    CONSTRAINT CC_Fahrzeug_Kapazitaet CHECK (Kapazitaet > 0)
+    \end{verbatim}
+    \item \textbf{Standardwerte}\\Beispiel aus 'Bus':\begin{verbatim}
+    Niederflur CHAR(1) DEFAULT 'N'
+    \end{verbatim}
+    \item \textbf{Deletion Rules}
+    \begin{itemize}
+        \item \textit{ON DELETE CASCADE}\\Beispiel aus 'Linie':\begin{verbatim}
+        CONSTRAINT FK_Linie_Haltestelle_Linie FOREIGN KEY (LinienNr) 
+            REFERENCES Linie(LinienNr) ON DELETE CASCADE
+        \end{verbatim}
+        \item \textit{ON DELETE SET NULL}\\Wird in 'Fahrer' verwendet:\begin{verbatim}
+        CONSTRAINT FK_Fahrer_Mentor FOREIGN KEY (MentorNr) 
+            REFERENCES Fahrer(PersonalNr)
+            ON DELETE SET NULL
+        \end{verbatim}
+        \item \textit{NO ACTION}\\sollte default Verhalten sein wenn nichts anderes definiert ist, Beispiel bei 'Wartung':\begin{verbatim}
+        CONSTRAINT FK_Wartung_Fahrzeug FOREIGN KEY (FahrzeugID) 
+            REFERENCES Fahrzeug(FahrzeugID)
+            -- defaults to NO ACTION, can't delete Fahrzeug with Wartung
+        \end{verbatim}
+        In diesem Fall wollen wir verhindern das Fahrzeuge die gewartet werden, gelöscht werden können.
+    \end{itemize}
+\end{itemize}
+
+\medskip
+\subsection{Fahrzeug}
+\begin{verbatim}
+CREATE TABLE Fahrzeug (
+  FahrzeugID INTEGER,
+  Baujahr    SMALLINT NOT NULL,
+  Kapazitaet INTEGER,
+  -- PK: primary key
+  CONSTRAINT PK_Fahrzeug PRIMARY KEY (FahrzeugID),
+  -- CC: check constraint
+  CONSTRAINT CC_Fahrzeug_Kapazitaet CHECK (Kapazitaet > 0)
+);
+\end{verbatim}
+%
+\subsection{Bus}
+\begin{verbatim}
+CREATE TABLE Bus (
+  FahrzeugID  INTEGER,
+  Kennzeichen VARCHAR2(20) NOT NULL,
+  Niederflur  CHAR(1) DEFAULT 'N',
+  CONSTRAINT PK_Bus PRIMARY KEY (FahrzeugID),
+  -- UQ: unique constraint
+  CONSTRAINT UQ_Bus_Kennzeichen UNIQUE (Kennzeichen),
+  -- FK: foreign key
+  CONSTRAINT FK_Bus_Fahrzeug FOREIGN KEY (FahrzeugID)
+    REFERENCES Fahrzeug(FahrzeugID)
+    ON DELETE CASCADE,
+  CONSTRAINT CC_Bus_Niederflur CHECK (Niederflur IN ('J','N'))
+);
+\end{verbatim}
+%
+\subsection{Zug}
+\begin{verbatim}
+CREATE TABLE Zug (
+  FahrzeugID  INTEGER,
+  Baureihe    VARCHAR2(30) NOT NULL,
+  Wagonanzahl INTEGER,
+  CONSTRAINT PK_Zug PRIMARY KEY (FahrzeugID),
+  CONSTRAINT FK_Zug_Fahrzeug FOREIGN KEY (FahrzeugID)
+    REFERENCES Fahrzeug(FahrzeugID)
+    ON DELETE CASCADE,
+  CONSTRAINT CC_Zug_Wagon CHECK (Wagonanzahl > 0)
+);
+\end{verbatim}
+%
+\subsection{Straßenbahn}
+\begin{verbatim}
+CREATE TABLE Strassenbahn (
+  FahrzeugID  INTEGER,
+  Spurweite   INTEGER NOT NULL,
+  Stromsystem VARCHAR2(30) NOT NULL,
+  CONSTRAINT PK_Strassenbahn PRIMARY KEY (FahrzeugID),
+  CONSTRAINT FK_Strassenbahn_Fahrzeug FOREIGN KEY (FahrzeugID)
+    REFERENCES Fahrzeug(FahrzeugID)
+    ON DELETE CASCADE
+);
+\end{verbatim}
+%
+\subsection{Wartung}
+\begin{verbatim}
+CREATE TABLE Wartung (
+  WartungID  INTEGER,
+  Datum      DATE NOT NULL,
+  Kosten     NUMERIC(10,2),
+  Art        VARCHAR2(50) NOT NULL,
+  FahrzeugID INTEGER NOT NULL,
+  CONSTRAINT PK_Wartung PRIMARY KEY (WartungID),
+  -- defaults to NO ACTION, can't delete Fahrzeug with Wartung
+  CONSTRAINT FK_Wartung_Fahrzeug FOREIGN KEY (FahrzeugID)
+    REFERENCES Fahrzeug(FahrzeugID),
+  CONSTRAINT CC_Wartung_Kosten CHECK (Kosten >= 0)
+);
+\end{verbatim}
+%
+\subsection{Personal}
+\begin{verbatim}
+CREATE TABLE Personal (
+  PersonalNr       INTEGER,
+  Name             VARCHAR2(50) NOT NULL,
+  Gehalt           NUMERIC(10,2),
+  Einstellungsdatum DATE NOT NULL,
+  CONSTRAINT PK_Personal PRIMARY KEY (PersonalNr),
+  CONSTRAINT CC_Personal_Gehalt CHECK (Gehalt > 0)
+);
+\end{verbatim}
+%
+\newpage
+%
+\subsection{Fahrer}
+\begin{verbatim}
+CREATE TABLE Fahrer (
+  PersonalNr         INTEGER,
+  Fuehrerscheinklasse VARCHAR2(10) NOT NULL,
+  MentorNr           INTEGER,
+  CONSTRAINT PK_Fahrer PRIMARY KEY (PersonalNr),
+  CONSTRAINT FK_Fahrer_Personal FOREIGN KEY (PersonalNr)
+    REFERENCES Personal(PersonalNr)
+    ON DELETE CASCADE,
+  CONSTRAINT FK_Fahrer_Mentor FOREIGN KEY (MentorNr)
+    REFERENCES Fahrer(PersonalNr)
+    ON DELETE SET NULL
+);
+\end{verbatim}
+%
+\subsection{Kontrolleur}
+\begin{verbatim}
+CREATE TABLE Kontrolleur (
+  PersonalNr          INTEGER,
+  Zustaendigkeitsbereich VARCHAR2(50) NOT NULL,
+  CONSTRAINT PK_Kontrolleur PRIMARY KEY (PersonalNr),
+  CONSTRAINT FK_Kontrolleur_Personal FOREIGN KEY (PersonalNr)
+    REFERENCES Personal(PersonalNr)
+    ON DELETE CASCADE
+);
+\end{verbatim}
+%
+\subsection{Haltestelle}
+\begin{verbatim}
+CREATE TABLE Haltestelle (
+  HaltestellenID INTEGER,
+  Name           VARCHAR2(50) NOT NULL,
+  Barrierefrei   CHAR(1) DEFAULT 'N',
+  CONSTRAINT PK_Haltestelle PRIMARY KEY (HaltestellenID),
+  -- UQ: unique constraint
+  CONSTRAINT UQ_Haltestelle_Name UNIQUE (Name),
+  CONSTRAINT CC_Haltestelle_Barrierefrei CHECK (Barrierefrei IN ('J','N'))
+);
+\end{verbatim}
+%
+\subsection{Linie}
+\begin{verbatim}
+CREATE TABLE Linie (
+  LinienNr      INTEGER,
+  Taktung       INTEGER,
+  Betriebsbeginn TIME NOT NULL,
+  Betriebsende   TIME NOT NULL,
+  CONSTRAINT PK_Linie PRIMARY KEY (LinienNr),
+  CONSTRAINT CC_Linie_Taktung CHECK (Taktung > 0)
+);
+\end{verbatim}
+%
+\newpage
+%
+\subsection{Linie\_Haltestelle}
+\begin{verbatim}
+CREATE TABLE Linie_Haltestelle (
+  LinienNr       INTEGER,
+  HaltestellenID INTEGER,
+  Reihenfolge    INTEGER,
+  CONSTRAINT PK_Linie_Haltestelle PRIMARY KEY (LinienNr, HaltestellenID),
+  CONSTRAINT FK_Linie_Haltestelle_Linie FOREIGN KEY (LinienNr)
+    REFERENCES Linie(LinienNr)
+    ON DELETE CASCADE,
+  CONSTRAINT FK_Linie_Haltestelle_Haltestelle FOREIGN KEY (HaltestellenID)
+    REFERENCES Haltestelle(HaltestellenID)
+    ON DELETE CASCADE,
+  CONSTRAINT CC_LH_Reihenfolge CHECK (Reihenfolge > 0)
+);
+\end{verbatim}
+%
+\subsection{Kunde}
+\begin{verbatim}
+CREATE TABLE Kunde (
+  KundenID INTEGER,
+  Name     VARCHAR2(50) NOT NULL,
+  Email    VARCHAR2(100) NOT NULL,
+  Adresse  VARCHAR2(100),
+  CONSTRAINT PK_Kunde PRIMARY KEY (KundenID),
+  CONSTRAINT UQ_Kunde_Email UNIQUE (Email)
+);
+\end{verbatim}
+%
+\subsection{Ticket}
+\begin{verbatim}
+CREATE TABLE Ticket (
+  TicketID   INTEGER,
+  Kaufdatum  DATE NOT NULL,
+  Preis      NUMERIC(8,2),
+  GueltigVon DATE NOT NULL,
+  GueltigBis DATE NOT NULL,
+  KundenID   INTEGER NOT NULL,
+  CONSTRAINT PK_Ticket PRIMARY KEY (TicketID),
+  CONSTRAINT FK_Ticket_Kunde FOREIGN KEY (KundenID)
+    REFERENCES Kunde(KundenID)    
+  CONSTRAINT CC_Ticket_Preis CHECK (Preis > 0),
+  CONSTRAINT CC_Ticket_Datum CHECK (GueltigBis >= GueltigVon)
+);
+\end{verbatim}
+%
+\subsection{Ticket\_Linie}
+\begin{verbatim}
+CREATE TABLE Ticket_Linie (
+  TicketID INTEGER,
+  LinienNr INTEGER,
+  CONSTRAINT PK_Ticket_Linie PRIMARY KEY (TicketID, LinienNr),
+  CONSTRAINT FK_Ticket_Line_Ticket FOREIGN KEY (TicketID)
+    REFERENCES Ticket(TicketID)
+    ON DELETE CASCADE,
+  CONSTRAINT FK_Ticket_Line_Linie FOREIGN KEY (LinienNr)
+    REFERENCES Linie(LinienNr)
+    ON DELETE CASCADE
+);
+\end{verbatim}
+%
+\newpage
+%
+\section{Delete Script}
+Im Delete-Script muss beachtet werden dass die Tables in der richtigen Reihenfolge gelöscht werden.\\
+Zuerst die 'Child' Tables und alle Tables die Fremdschlüssel beinhalten und dann die 'Parent' Tables.\\
+Beispiel bei Tickets: $ Ticket\_Linie \rightarrow Ticket \rightarrow Kunde$.
+\begin{verbatim}
+DROP TABLE Ticket_Linie;
+DROP TABLE Ticket;
+DROP TABLE Kunde;
+DROP TABLE Linie_Haltestelle;
+DROP TABLE Haltestelle;
+DROP TABLE Linie;
+DROP TABLE Wartung;
+DROP TABLE Bus;
+DROP TABLE Zug;
+DROP TABLE Strassenbahn;
+DROP TABLE Fahrzeug;
+DROP TABLE Fahrer;
+DROP TABLE Kontrolleur;
+DROP TABLE Personal;
+\end{verbatim}
+%
+\section{Physischer Entwurf - Erweitert}
+Alle Tables werden mit zumindest einem Element befüllt.
+\begin{verbatim}
+INSERT INTO Fahrzeug VALUES (1, 2018, 80);
+INSERT INTO Fahrzeug VALUES (2, 2020, 200);
+INSERT INTO Fahrzeug VALUES (3, 2015, 150);
+
+INSERT INTO Bus VALUES (1, 'W-1234AB', 'J');
+INSERT INTO Zug VALUES (2, 'Railjet', 6);
+INSERT INTO Strassenbahn VALUES (3, 1435, 'DC 600V');
+
+INSERT INTO Wartung VALUES (1, DATE '2025-01-10', 500.00, 'Inspektion', 1);
+
+INSERT INTO Personal VALUES (1, 'Max Fahrer', 2500, DATE '2020-03-23');
+INSERT INTO Personal VALUES (2, 'Anna Fahrerin', 2300, DATE '2022-07-19');
+INSERT INTO Personal VALUES (3, 'Karl Kontrolle', 2200, DATE '2021-01-15');
+
+INSERT INTO Fahrer VALUES (1, 'B', NULL);
+INSERT INTO Fahrer VALUES (2, 'B', 1);
+
+INSERT INTO Kontrolleur VALUES (3, 'Linie 15');
+
+INSERT INTO Haltestelle VALUES (1, 'Praterstern', 'J');
+INSERT INTO Haltestelle VALUES (2, 'Karlsplatz', 'N');
+
+INSERT INTO Linie VALUES (1, 5, TIME '05:00:00', TIME '23:30:00');
+
+INSERT INTO Linie_Haltestelle VALUES (1, 1, 1);
+INSERT INTO Linie_Haltestelle VALUES (1, 2, 2);
+
+INSERT INTO Kunde VALUES (1, 'Lisa Kunde', 'lisa@beispiel.com', 'Wien');
+
+INSERT INTO Ticket 
+    VALUES (1, DATE '2025-02-01', 45.00, DATE '2025-02-01', DATE '2025-02-28', 1);
+
+INSERT INTO Ticket_Linie VALUES (1, 1);
+\end{verbatim}
+%
+\subsection{Beispiele zu Primär- und Fremdschlüssel:}
+Korrekte Einträge können natürlich gemacht werden (und Primär- und Fremdschlüssel verwenden.\\
+Hier zwei Beispiele wie falsche Einträge verhindert werden können:
+\begin{verbatim}
+-- Primary Key Test:
+INSERT INTO Personal VALUES (1, 'Zwilling Fahrer', 2000, DATE '2023-01-01'); 
+-- PersonalNr already exists
+-- Foreign Key Test:
+INSERT INTO Bus VALUES (99, 'W-1235AB', 'N'); 
+-- there is no FahrzeugID 99
+\end{verbatim}
+Einmal wird versucht einen bestehenden Primärschlüssel zu verwenden $\rightarrow$ ERROR.\\
+Einmal wird versucht einen Eintrag anzulegen der einen Fremdschlüssel hat den es nicht gibt $\rightarrow$ ERROR.
+%
+\subsection{Beispiele zu den Deletion Rules:}
+Wenn ein Fahrzeug gewartet wird, kann es nicht gelöscht werden (NO ACTION).
+Wenn Teil des Personals gelöscht wird, wird der korrekte Arbeiter gelöscht (CASCADE) und in diesem Fall war der Fahrer auch ein Mentor und somit wird beim anderen Fahrer der Mentor auf NULL gesetzt (SET NULL).
+\begin{verbatim}
+-- Deletion Rule Tests
+-- 1) NO ACTION
+DELETE FROM Fahrzeug WHERE FahrzeugID = 1; 
+-- can't be deleted is is part of Wartung 1
+-- 2) CASCADE and SET NULL
+DELETE FROM Personal WHERE PersonalNr = 1; 
+-- Fahrer 1 will be deleted (CASCADE)
+-- Fahrer 2's Mentor will be deleted (SET NULL)
+\end{verbatim}
+%
+\subsection{View und Abfrage:}
+Hier eine Ticket Übersicht zu den Linien:
+\begin{verbatim}
+CREATE VIEW Ticket_Uebersicht AS
+SELECT
+  k.Name AS Kunde,
+  t.TicketID,
+  t.Preis,
+  l.LinienNr
+FROM Kunde k
+JOIN Ticket t ON k.KundenID = t.KundenID
+JOIN Ticket_Linie tl ON t.TicketID = tl.TicketID
+JOIN Linie l ON tl.LinienNr = l.LinienNr;
+
+SELECT * FROM Ticket_Uebersicht;
+\end{verbatim} 
+%
+%\newpage %(enable for citations)
+%
+%\bibliographystyle{ieeetr} %(enable for citations)
+%
+%\bibliography{references} %(enable for citations)
+%
+\end{document}
