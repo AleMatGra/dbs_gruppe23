@@ -1,0 +1,108 @@
+%----------------------------------------------------------------------------
+\documentclass{article}
+%----------------------------------------------------------------------------
+\usepackage[a4paper, top=20mm, bottom=20mm, left=20mm, right=20mm]{geometry}
+%----------------------------------------------------------------------------
+\usepackage{paracol}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{lipsum}
+\usepackage{fancyhdr}
+\usepackage[ngerman]{babel}
+\usepackage{parskip}
+\usepackage{pdflscape}
+%----------------------------------------------------------------------------
+\graphicspath{ {./images/} }
+%----------------------------------------------------------------------------
+% fancyhdr setup
+%----------------------------------------------------------------------------
+\pagestyle{fancy}	% activate fancy style
+\fancyhf{}			% clear fancy settings
+% Header
+\fancyhead[L]{Datenbanksysteme: Übungsprojekt}
+\fancyhead[C]{Logischer und Physischer Entwurf}
+\fancyhead[R]{v1.0}
+\setlength{\headheight}{13pt}
+% Footer
+\fancyfoot[C]{Seite \thepage}
+\fancyfoot[R]{\today}
+% lines
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%----------------------------------------------------------------------------
+% first page setup
+%----------------------------------------------------------------------------
+\title{Meilenstein 3: Logischer und Physischer Entwurf}
+\author{Gruppe 30\\Boiko Bohdana, Alexander Grath}
+\date{} % empty date
+%----------------------------------------------------------------------------
+% reference definitions (examples)
+%----------------------------------------------------------------------------
+\begin{filecontents}{references.bib}
+@article{doe2023,
+  author  = {Doe, John and Smith, Jane},
+  title   = {An Analysis of Citation Styles},
+  journal = {IEEE Transactions on Automatic Formatting},
+  volume  = {10},
+  number  = {2},
+  pages   = {100--105},
+  year    = {2023}
+}
+
+@book{knuth1984,
+  author    = {Knuth, Donald E.},
+  title     = {The TeXbook},
+  publisher = {Addison-Wesley},
+  year      = {1984}
+}
+\end{filecontents}
+%----------------------------------------------------------------------------
+\begin{document}
+%
+\maketitle
+%
+\thispagestyle{empty} % clear page number
+%
+\begin{center}
+\section*{Logischer und Physischer Entwurf}
+\end{center}
+%
+% show university logo
+\begin{figure}
+	\centering
+	\includegraphics[scale=.6]{univie}
+\end{figure}
+%
+\newpage
+%
+%\tableofcontents%(enable for table of contents)
+%
+\setcounter{page}{1} % restart page count at 1
+%
+%\newpage %(enable for table of contents)
+%
+% ### EXAMPLE OF USING LIPSUM AND CITATIONS ###
+%\section{Kurze Beschreibung des Themengebietes und Relevanz der Studie}
+%
+%\lipsum[1-9]  %~1000W
+%\lipsum[1-13] %~1500W
+%
+%This is a citation for the first paper \cite{doe2023}. 
+%Here is a citation for a book \cite{knuth1984}.
+% #############################################
+%
+\section{Normalisierung (3. Normalform)}
+\begin{paracol}{2}[\section{Section}]
+%
+\switchcolumn
+%
+\end{paracol}
+%
+%\newpage %(enable for citations)
+%
+%\bibliographystyle{ieeetr} %(enable for citations)
+%
+%\bibliography{references} %(enable for citations)
+%
+\end{document}
