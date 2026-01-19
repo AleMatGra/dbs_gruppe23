@@ -12,6 +12,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{parskip}
 \usepackage{pdflscape}
+\usepackage{tabto}
 %----------------------------------------------------------------------------
 \graphicspath{ {./images/} }
 %----------------------------------------------------------------------------
@@ -93,16 +94,227 @@
 % #############################################
 %
 \section{Normalisierung (3. Normalform)}
-\section{Datenbank Triggers}
-\section{Datengenerierung (Data-Generator mit Jupyter Notebook)}
-\section{ChatGPT}
-\textbf{Verwendeted Prompt, aus der Angabe:}\\
-
+%
+\subsubsection*{Fahrzeug}
+\tabto{1cm} Fahrzeug(\underline{FahrzeugID}, Baujahr, Kapazität)\\
+\tabto{1cm} \{FahrzeugID $\rightarrow$ Baujahr, Kapaziät\}\\
 \smallskip
+
+Da der Primärschlüssel aus einem einzigen Attribut besteht, liegen keine partiellen Abhängigkeiten vor (2NF).\\Zudem existieren keine transitiven Abhängigkeiten zwischen nicht-Schlüsselattributen (3NF).
+%
+\subsubsection*{Bus}
+\tabto{1cm} Bus(\underline{\textit{FahrzeugID}}, Kennzeichen, Niederflur)\\
+\tabto{1cm} \{FahrzeugID $\rightarrow$ Kennzeichen, Niederflur\}\\
+\smallskip
+
+Der Primärschlüssel besteht aus einem einzigen Attribut (FahrzeugID), daher liegen keine partiellen\\ Abhängigkeiten vor (2NF).\\Zwischen den Nicht-Schlüsselattributen existieren keine transitiven Abhängigkeiten. FahrzeugID ist zugleich ein Fremdschlüssel, der auf die Relation Fahrzeug verweist, begründet jedoch keine transitive Abhängigkeit innerhalb dieser Relation (3NF).
+%
+\subsubsection*{Zug}
+\tabto{1cm} Zug(\underline{\textit{FahrzeugID}}, Baureihe, Wagonzahl)\\
+\tabto{1cm} \{FahrzeugID $\rightarrow$ Baureihe, Wagonzahl\}\\
+\smallskip
+
+Da der Primärschlüssel einattributig ist, liegen keine partiellen Abhängigkeiten vor (2NF).\\Zwischen den Nicht-Schlüsselattributen bestehen keine transitiven Abhängigkeiten. FahrzeugID fungiert als Fremdschlüssel auf die Relation Fahrzeug und stellt keine transitive Abhängigkeit dar (3NF).
+%
+\subsubsection*{Straßenbahn}
+\tabto{1cm} Straßenbahn(\underline{\textit{FahrzeugID}}, Spurweite, Stromsystem)\\
+\tabto{1cm} \{FahrzeugID $\rightarrow$ Spurweite, Stromsystem\}\\
+\smallskip
+
+Der Primärschlüssel besteht aus einem einzigen Attribut, wodurch keine partiellen Abhängigkeiten auftreten (2NF).\\ Es existieren keine transitiven Abhängigkeiten zwischen Nicht-Schlüsselattributen. Die Referenz auf Fahrzeug über den Fremdschlüssel FahrzeugID beeinflusst die Normalform nicht (3NF).
+%
+\subsubsection*{Wartung}
+\tabto{1cm} Wartung(\underline{WartungsID}, Datum, Kosten, Art, \textit{FahrzeugID})\\
+\tabto{1cm} \{WartungsID $\rightarrow$ Datum, Kosten, Art\}\\
+\smallskip
+
+Der Primärschlüssel besteht aus einem einzigen Attribut. Damit haben wir keine partiellen Abhängigkeiten (2NF).\\Es gibt keine transitiven Abhängigkeiten zwischen den Nicht-Schlüsselattributen. FahrzeugID ist ein Fremdschlüssel, löst aber keine transitive Abhängigkeit der anderen Attribute aus.
+%
+\subsubsection*{Personal}
+\tabto{1cm} Personal(\underline{PersonalNr}, Name, Gehalt, Einstellungsdatum)\\
+\tabto{1cm} \{PersonalNr $\rightarrow$ Name, Gehalt, Einstellungsdatum\}\\
+\smallskip
+
+Der Primärschlüssel ist einattributig, somit sind keine partiellen Abhängigkeiten vorhanden. (2NF) Es bestehen keine transitiven Abhängigkeiten zwischen Nicht-Schlüsselattributen. (3NF)
+%
+\subsubsection*{Fahrer}
+\tabto{1cm} Fahrer(\underline{\textit{PersonalNr}}, Führerscheinklasse, \textit{MentorNr})\\
+\tabto{1cm} \{PersonalNr $\rightarrow$ Führerscheinklasse, MentorNr\}\\
+\smallskip
+
+Der Primärschlüssel besteht aus einem einzigen Attribut (PersonalNr), daher liegen keine\\ partiellen Abhängigkeiten vor (2NF).\\Das Attribut MentorNr ist ein Fremdschlüssel, der auf die Relation Fahrer verweist, stellt jedoch keine transitive Abhängigkeit zwischen Nicht-Schlüsselattributen dar. Alle Nicht-Schlüsselattribute hängen ausschließlich vom Primärschlüssel ab (3NF).
+%
+\subsubsection*{Kontrolleur}
+\tabto{1cm} Kontrolleur(\underline{\textit{PersonalNr}}, Zuständigkeitsbereich)\\
+\tabto{1cm} \{PersonalNr $\rightarrow$ Zuständigkeitsbereich\}\\
+\smallskip
+
+Da der Primärschlüssel einattributig ist, liegen keine partiellen Abhängigkeiten vor (2NF). Es gibt nur ein einziges Nicht-Schlüsselattribut (Zustaendigkeitsbereich), daher kann keine transitive Abhängigkeit zwischen Nicht-Schlüsselattributen existieren (3NF).
+%
+\subsubsection*{Halstestelle}
+\tabto{1cm} Halstestelle(\underline{HalstestellenID}, Name, Barrierefrei)\\
+\tabto{1cm} \{HaltestellenID $\rightarrow$ Name, Barrierefrei\}\\
+\smallskip
+
+Der Primärschlüssel besteht aus einem Attribut, wodurch keine partiellen Abhängigkeiten auftreten (2NF). Es liegen keine transitiven Abhängigkeiten zwischen Nicht-Schlüsselattributen vor (3NF).
+%
+\subsubsection*{Linie}
+\tabto{1cm} Linie(\underline{LinienNr}, Taktung, Betriebsbeginn, Betriebsende)\\
+\tabto{1cm} \{LinienNr $\rightarrow$ Taktung, Betriebsbeginn, Betriebsende\}\\
+\smallskip
+
+Da der Primärschlüssel einattributig ist, existieren keine partiellen Abhängigkeiten (2NF).\\Zwischen den Nicht-Schlüsselattributen bestehen keine transitiven Abhängigkeiten (3NF).
+%
+\subsubsection*{Linie\_Haltestelle}
+\tabto{1cm} Linie\_Haltestelle(\underline{\textit{LinienNr}}, \underline{\textit{HaltestellenID}}, Reihenfolge)\\
+\tabto{1cm} \{LinienNr, HaltestellenID $\rightarrow$ Reihenfolge\}\\
+\smallskip
+
+Der Primärschlüssel ist zusammengesetzt und besteht aus den Attributen LinienNr und HaltestellenID. Das Attribut Reihenfolge hängt vollständig von beiden Attributen des Primärschlüssels ab, sodass keine partiellen Abhängigkeiten vorliegen (2NF).\\Da keine weiteren funktionalen Abhängigkeiten zwischen Nicht-Schlüsselattributen existieren, liegen auch keine transitiven Abhängigkeiten vor (3NF).
+%
+\newpage
+%
+\subsubsection*{Kunde}
+\tabto{1cm} Kunde(\underline{KundenID}, Name, Email, Adresse)\\
+\tabto{1cm} \{KundenID $\rightarrow$ Name, Email, Adresse\}\\
+\tabto{1cm} \{Email $\rightarrow$ KundenID, Name, Adresse\} (Email UNIQUE)
+\smallskip
+
+Da sowohl KundenID als auch Email Schlüsselkandidaten sind, liegen keine partiellen oder\\ transitiven Abhängigkeiten vor (3NF).
+\subsubsection*{Kunde - Adresse, Erweiterung}
+Adresse alleine ist nicht sehr sinnvoll. Es wird daher mit Strasse, HausNr, PLZ und Ort ersetzt.\\
+\tabto{1cm} Kunde(\underline{KundenID}, Name, Email, Strasse, HausNR, PLZ, Ort)\\
+\tabto{1cm} \{KundenID $\rightarrow$ Name, Email, Strasse, HausNR, PLZ, Ort\}\\
+\smallskip
+
+Jetzt haben wir ein Problem. Mit der Rechtsreduktion erkennen wir: KundenID $\rightarrow$ PLZ $\rightarrow$ Ort. Ort ist jetzt redundant.\\
+Ort wird gestrichen.\\
+\tabto{1cm} \{KundenID $\rightarrow$ Name, Email, Strasse, HausNR, PLZ\}\\
+\tabto{1cm} \{PLZ $\rightarrow$ Ort\}\\
+\smallskip
+
+Wir haben jetzt zwei neue Relationen $R_{1}$ Kunde und $R_{2}$ Stadt:\\
+\smallskip
+
+Kunde(\underline{KundenID}, Name, Email, Strasse, HausNR, \textit{PLZ})\\
+\textbf{Primary Key:} KundenID\\
+\textbf{Foreign Key:} PLZ $\diamond $ Stadt.PLZ\\
+\smallskip
+
+Ort(\underline{PLZ}, Ort)\\
+\textbf{Primary Key:} PLZ\\
+\smallskip
+
+Damit sind die transitiven Abhängigkeiten wieder entfernt und wir haben die 3. Normalform erreicht.
+
+\subsubsection*{Physisches Modell, überführen}
+$R_{2}$
+\begin{verbatim}
+CREATE TABLE Stadt (
+  PLZ      VARCHAR2(4) NOT NULL,
+  Ort      VARCHAR2(50) NOT NULL,
+  CONSTRAINT PK_Stadt PRIMARY KEY (PLZ)
+);
+\end{verbatim}
+$R_{1}$
+\begin{verbatim}
+CREATE TABLE Kunde (
+  KundenID INTEGER,
+  Name     VARCHAR2(50) NOT NULL,
+  Email    VARCHAR2(100) NOT NULL,
+  Strasse  VARCHAR2(50),
+  Hausnr   VARCHAR2(10),
+  PLZ      VARCHAR2(4),
+  CONSTRAINT PK_Kunde PRIMARY KEY (KundenID),
+  CONSTRAINT UQ_Kunde_Email UNIQUE (Email),
+  CONSTRAINT FK_Kunde_Stadt FOREIGN KEY (PLZ) REFERENCES Stadt(PLZ)
+);
+\end{verbatim}
+%
+\newpage
+%
+\subsubsection*{Ticket}
+\tabto{1cm} Ticket(\underline{TicketID}, Kaufdatum, Preis, GültigVon, GültigBis, \textit{KundenID})\\
+\tabto{1cm} \{TicektID $\rightarrow$ Kaufdatum, Preis, GültigVon, GültigBis, KundenID\}\\
+\smallskip
+
+Da der Primärschlüssel aus einem Attribut besteht, liegen keine partiellen Abhängigkeiten vor. KundenID ist ein Fremdschlüssel und begründet keine transitive Abhängigkeit zwischen Nicht-Schlüsselattributen. (3NF)
+%
+\subsubsection*{Ticket\_Linie}
+\tabto{1cm} Ticket\_Linie(\underline{\textit{TicketID}}, \underline{\textit{LinienNr}})\\
+\tabto{1cm} \{FahrzeugID $\rightarrow$ Spurweite, Stromsystem\}\\
+\smallskip
+
+Der Primärschlüssel ist zusammengesetzt (TicketID, LinienNr). Da die Tabelle jedoch keine weiteren Attribute enthält, sind sowohl die 2. Normalform und die 3. Normalform erfüllt.
+%
+\section{Datenbank Triggers}
+%
+\subsection{Auto-Increment}
+Information von \href{https://www.w3schools.com/sql/sql_autoincrement.asp}{w3schools} und \href{https://stackoverflow.com/questions/11296361/how-to-create-id-with-auto-increment-on-oracle}{stackoverflow} entnommen.\\
+\smallskip
+
+Zuerst die Sequenz:
+\begin{verbatim}
+CREATE SEQUENCE SEQ_TicketID
+  START WITH 1
+  INCREMENT BY 1
+  NOCACHE;
+\end{verbatim}
+Wenn die ID NULL ist wird mit der Sequenz eine neue ID generiert:
+\begin{verbatim}
+CREATE OR REPLACE TRIGGER TRG_Ticket_AutoIncrement
+BEFORE INSERT ON Ticket
+FOR EACH ROW
+BEGIN
+  IF :NEW.TicketID IS NULL THEN
+    :NEW.TicketID := SEQ_TicketID.NEXTVAL;
+  END IF;
+END;
+\end{verbatim}
+%
+\subsection{Trigger mit Business Logic}
+Die Idee wurde von \href{https://stackoverflow.com/questions/53576357/trigger-warning-message}{stackoverflow} entnommen.\\
+\smallskip
+
+Wir wollen zu hohe Kosten verhindern, bzw. eine Warnung generieren:
+\begin{verbatim}
+CREATE TABLE KostenWarnung (
+  WarnungID INTEGER GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+  Nachricht VARCHAR2(200),
+  ErfasstAm DATE
+);
+\end{verbatim}
+%
+\newpage
+%
+Einerseits wird NULL auf 0 gesetzt und wenn der Wert 5000 überschritten wird, wird ein Eintrag in die neue Tabelle gemacht.
+\begin{verbatim}
+CREATE OR REPLACE TRIGGER TRG_Wartung_Check
+BEFORE INSERT OR UPDATE ON Wartung
+FOR EACH ROW
+BEGIN
+  IF :NEW.Kosten IS NULL THEN
+    :NEW.Kosten := 0;
+  END IF;
+  IF :NEW.Kosten > 5000 THEN
+    INSERT INTO KostenWarnung (Nachricht, ErfasstAm)
+    VALUES ('ACHTUNG: Hohe Wartungskosten für Fahrzeug ' || :NEW.FahrzeugID || ': ' || :NEW.Kosten || ' Euro', SYSDATE);
+  END IF;
+END;
+\end{verbatim}
+%
+\section{Datengenerierung (Data-Generator mit Jupyter Notebook)}
+Siehe \textbf{Data\_Generator.ipynb} in der Abgabe.
+%
+\section{ChatGPT}
+%
+\textbf{Verwendeted Prompt, aus der Angabe:}\\
+\smallskip
+
 Generiere mir ein ER-Modell, ein relationales Schema und die zugehörigen SQL Statements auf Basis der
 folgenden Informationen: + verbatim die Abgabe aus Aufgabe 1-1.\\
-
 \medskip
+
 \textbf{Modell:} GPT-5.2 (free)\\
 \textbf{Link:} \url{https://chatgpt.com/share/696ba0f8-d094-8013-a1ba-5c41bd8ecab5}
 %
@@ -116,7 +328,8 @@ Relationalem Schema
 
 SQL-DDL-Statements (CREATE TABLE …)
 
-Ich halte mich eng an deine Vorgaben (Wien Praterstern, kein Zahlungssystem, Fokus auf Betrieb/Vertrieb).
+Ich halte mich eng an deine Vorgaben 
+(Wien Praterstern, kein Zahlungssystem, Fokus auf Betrieb/Vertrieb).
 
 1. ER-Modell (konzeptionell)
 Entitäten und Spezialisierungen
@@ -275,7 +488,8 @@ LINIE_HALTESTELLE(LinienNr, HaltestellenID, Reihenfolge)
 EINSATZ(EinsatzID, Datum, PersonalNr, FahrzeugID, LinienNr)
 
 KUNDE(KundenID, Name, Email, Adresse)
-TICKET(TicketID, Kaufdatum, Preis, GueltigVon, GueltigBis, KundenID, KontrolleurNr)
+TICKET(TicketID, Kaufdatum, Preis, GueltigVon, 
+    GueltigBis, KundenID, KontrolleurNr)
 TICKET_LINIE(TicketID, LinienNr)
 
 3. SQL-Statements (DDL)
@@ -361,7 +575,8 @@ CREATE TABLE Linie_Haltestelle (
     Reihenfolge INT,
     PRIMARY KEY (LinienNr, HaltestellenID),
     FOREIGN KEY (LinienNr) REFERENCES Linie(LinienNr),
-    FOREIGN KEY (HaltestellenID) REFERENCES Haltestelle(HaltestellenID)
+    FOREIGN KEY (HaltestellenID) 
+        REFERENCES Haltestelle(HaltestellenID)
 );
 
 CREATE TABLE Einsatz (
@@ -403,18 +618,19 @@ CREATE TABLE Ticket_Linie (
 );
 
 
-Wenn du möchtest, kann ich dir das ER-Modell auch als Diagramm (Chen oder Crow’s Foot) 
+Wenn du möchtest, kann ich dir das ER-Modell auch als 
+Diagramm (Chen oder Crow’s Foot) 
 beschreiben oder vereinfachen für eine Klausur.
 \end{verbatim}
 %
 \section*{Resultat Bewertung}
 Ein Problem ergibt sich da wir PDFs verwenden, wenn Umlaute kopiert werden die Umlautpunkte separat kopiert. Aus ö wir ¨o.\\
 Wird die Antwort kopiert ergibt sich ein ähnliches Problem. ChatGPT verwendet viele Symbole (vor allem Emojis und em-dash) die in anderen System nicht ordentlich dargestellt werden können.\\
-
 \medskip
+
 Da unsere Angabe sehr exakt ist und auch vieles mit Textmarkierungen herausgehoben ist, hatte die KI keine Probleme den Text richtig zu interpretieren. Es würde definitiv einen guten Startpunkt bieten.\\
-
 \medskip
+
 \textbf{Probleme:}
 \begin{itemize}
 	\item die tertiäre Beziehung aus Fahrzeug, Linie und Fahrer wurde nicht erkannt bzw. es ist fraglich, wie es interpretiert worden ist da es laut KI auch einen Primärschlüssel haben sollte
@@ -429,6 +645,7 @@ Da unsere Angabe sehr exakt ist und auch vieles mit Textmarkierungen herausgehob
 	\item es gibt keine default Werte
 	\item es gibt keine DELETE Regeln
 	\item es gibt kein NOT NULL
+	\item die Normalformen werden nicht beachtet
 	\item \emph{CONSTRAINT} wurde nicht verwendet um error-Meldungen lesbarer zu machen
 \end{itemize}
 %\begin{paracol}{2}[\section{Section}]
